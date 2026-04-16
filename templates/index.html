@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career Recommendation System | CareerAI With Airy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 30px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; text-align: center; }
+        .logo { display: inline-flex; align-items: center; gap: 10px; font-size: 1.5em; font-weight: bold; margin-bottom: 20px; }
+        .logo-icon { font-size: 2em; }
+        .header h1 { font-size: 2em; margin-bottom: 10px; }
+        .subtitle { opacity: 0.95; }
+        .nav-bar { background: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e0e0e0; flex-wrap: wrap; gap: 15px; }
+        .nav-links { display: flex; gap: 20px; flex-wrap: wrap; }
+        .nav-link { text-decoration: none; color: #667eea; font-weight: 600; padding: 8px 16px; border-radius: 8px; transition: all 0.3s; }
+        .nav-link:hover { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; transform: translateY(-2px); }
+        .nav-link.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .career-form { padding: 40px; }
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 1em; transition: all 0.3s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.1); }
+        .skill-row { display: flex; gap: 10px; margin-bottom: 15px; align-items: center; }
+        .skill-select-group { flex: 1; display: flex; gap: 10px; }
+        .skill-select { flex: 2; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; }
+        .custom-skill-input { flex: 1; padding: 12px; border: 2px solid #667eea; border-radius: 10px; display: none; }
+        .remove-skill-btn { background: #ff4757; color: white; border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 16px; transition: all 0.3s; }
+        .remove-skill-btn:hover { background: #ff3838; transform: scale(1.1); }
+        .submit-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 1.1em; font-weight: 600; cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102,126,234,0.4); }
+        .error-messages { background: #fee; border-left: 4px solid #f44336; padding: 15px 20px; margin: 20px 40px; border-radius: 12px; }
+        .error-messages ul { margin-left: 20px; color: #d32f2f; }
+        .features-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; padding: 40px; background: #f8f9fa; }
+        .feature { text-align: center; }
+        .feature-icon { font-size: 2em; margin-bottom: 10px; }
+        .feature h3 { font-size: 1em; margin-bottom: 5px; }
+        .feature p { font-size: 0.8em; color: #666; }
+        small { display: block; margin-top: 5px; color: #666; font-size: 0.8em; }
+        @media (max-width: 768px) { .skill-row { flex-direction: column; } .skill-select-group { width: 100%; flex-direction: column; } .features-grid { grid-template-columns: repeat(2,1fr); } .nav-bar { flex-direction: column; text-align: center; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo"><span class="logo-icon">🎯</span><span>CareerAI With Airy </span></div>
+            <h1>Discover Your Perfect Career Path</h1>
+            <p class="subtitle">Medical | Education | Hotel | Government | Technology | Business | Arts</p>
+        </div>
+        
+        <div class="nav-bar">
+            <div class="nav-links">
+                <a href="/" class="nav-link active">🏠 Home</a>
+                <a href="/team" class="nav-link">👥 Our Team (10 Members)</a>
+                <a href="/dashboard" class="nav-link">📊 Dashboard</a>
+            </div>
+            <div style="color: #667eea; font-weight: 500;">AI-Powered Career Guidance</div>
+        </div>
+
+        {% if errors %}
+        <div class="error-messages">
+            <h3>⚠️ Please fix:</h3>
+            <ul>{% for error in errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        </div>
+        {% endif %}
+
+        <form method="POST" action="/predict" id="careerForm">
+            <div class="career-form">
+                <div class="form-group">
+                    <label>👤 Full Name</label>
+                    <input type="text" name="name" placeholder="Enter your name" value="{{ form_data.name if form_data else '' }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>🎯 Primary Interest</label>
+                    <select name="interests" required>
+                        <option value="">Select</option>
+                        <option value="Medical">🏥 Medical & Healthcare</option>
+                        <option value="Education">📚 Education & Teaching</option>
+                        <option value="Hotel">🏨 Hotel & Hospitality</option>
+                        <option value="Government">🏛️ Government & Public Service</option>
+                        <option value="Technology">💻 Technology & IT</option>
+                        <option value="Business">📈 Business & Management</option>
+                        <option value="Arts">🎨 Arts & Creative</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>⚡ Your Skills (Add up to 6)</label>
+                    <div id="skills-container">
+                        {% for i in range(1, 7) %}
+                        <div class="skill-row" id="skill-row-{{ i }}">
+                            <div class="skill-select-group">
+                                <select class="skill-select" id="skill-select-{{ i }}" name="skill_{{ i }}" data-index="{{ i }}">
+                                    <option value="">Select a skill</option>
+                                    <optgroup label="Technical"><option>Python</option><option>Java</option><option>JavaScript</option><option>SQL</option><option>Machine Learning</option><option>Data Analysis</option></optgroup>
+                                    <optgroup label="Medical"><option>Patient Care</option><option>Diagnosis</option><option>Medical Knowledge</option><option>Emergency Response</option></optgroup>
+                                    <optgroup label="Education"><option>Teaching</option><option>Lesson Planning</option><option>Classroom Management</option><option>Mentoring</option></optgroup>
+                                    <optgroup label="Business"><option>Communication</option><option>Leadership</option><option>Project Management</option><option>Marketing</option><option>Sales</option></optgroup>
+                                    <optgroup label="Creative"><option>Design</option><option>Photoshop</option><option>Video Editing</option><option>Content Writing</option><option>Photography</option></optgroup>
+                                    <optgroup label="Hospitality"><option>Customer Service</option><option>Cooking</option><option>Event Planning</option></optgroup>
+                                    <optgroup label="Government"><option>Administration</option><option>Law Knowledge</option><option>Public Speaking</option></optgroup>
+                                    <option value="other">✨ Other (Type your own)</option>
+                                </select>
+                                <input type="text" class="custom-skill-input" id="custom-skill-{{ i }}" name="custom_skill_{{ i }}" placeholder="Type your skill here...">
+                            </div>
+                            {% if i < 6 %}
+                            <button type="button" class="remove-skill-btn" id="remove-btn-{{ i }}" data-row="{{ i }}" style="display:none;">✖</button>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <small>Select skills or choose "Other" to type your own. Click ✖ to remove a skill.</small>
+                </div>
+
+                <div class="form-group">
+                    <label>🎨 Your Hobbies</label>
+                    <select id="hobbies" name="hobbies" required>
+                        <option value="">Select your primary hobby</option>
+                        <optgroup label="Creative"><option>Drawing</option><option>Painting</option><option>Writing</option><option>Photography</option><option>Music</option><option>Singing</option><option>Dancing</option><option>Acting</option></optgroup>
+                        <optgroup label="Intellectual"><option>Reading</option><option>Programming</option><option>Research</option><option>Debating</option><option>Public Speaking</option><option>Blogging</option><option>Video Editing</option></optgroup>
+                        <optgroup label="Active"><option>Sports</option><option>Yoga</option><option>Fitness</option><option>Traveling</option><option>Gardening</option></optgroup>
+                        <optgroup label="Social"><option>Cooking</option><option>Volunteering</option><option>Event Planning</option><option>Gaming</option></optgroup>
+                        <option value="other_hobby">✨ Other</option>
+                    </select>
+                    <input type="text" id="custom_hobby" name="custom_hobby" placeholder="Type your hobby here..." style="display:none; margin-top:10px;">
+                </div>
+
+                <div class="form-group">
+                    <label>🎓 Education</label>
+                    <select name="education" required>
+                        <option value="">Select</option>
+                        <option>High School</option><option>Diploma</option><option>Bachelor</option><option>B.Ed</option><option>MBBS</option><option>Master</option><option>PhD</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>🏢 Work Style</label>
+                    <select name="work_style" required>
+                        <option value="">Select</option>
+                        <option value="Remote">🏠 Remote</option><option value="Office">🏢 Office</option><option value="Field">🌍 Field</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn"><span>Find My Career Path</span><span>→</span></button>
+            </div>
+        </form>
+
+        <div class="features-grid">
+            <div class="feature"><div class="feature-icon">📊</div><h3>Data-Driven</h3><p>Pandas & NumPy</p></div>
+            <div class="feature"><div class="feature-icon">📈</div><h3>Visual Dashboard</h3><p>Matplotlib</p></div>
+            <div class="feature"><div class="feature-icon">🎯</div><h3>50+ Careers</h3><p>7 Industries</p></div>
+            <div class="feature"><div class="feature-icon">🤖</div><h3>Smart Matching</h3><p>AI Engine</p></div>
+        </div>
+    </div>
+
+    <script>
+        // Function to handle skill dropdown changes
+        function setupSkillDropdown(index) {
+            const selectElement = document.getElementById(`skill-select-${index}`);
+            if (selectElement) {
+                selectElement.addEventListener('change', function() {
+                    const customInput = document.getElementById(`custom-skill-${index}`);
+                    if (this.value === 'other') {
+                        customInput.style.display = 'block';
+                        customInput.required = true;
+                        customInput.focus();
+                    } else {
+                        customInput.style.display = 'none';
+                        customInput.required = false;
+                        customInput.value = '';
+                    }
+                });
+            }
+        }
+
+        // Function to remove a skill row
+        function removeSkill(rowIndex) {
+            const row = document.getElementById(`skill-row-${rowIndex}`);
+            if (row) {
+                // Hide the row
+                row.style.display = 'none';
+                // Disable all inputs in the hidden row
+                const select = row.querySelector('select');
+                const customInput = row.querySelector('.custom-skill-input');
+                if (select) select.disabled = true;
+                if (customInput) customInput.disabled = true;
+            }
+        }
+
+        // Setup all skill dropdowns (1 to 6)
+        for (let i = 1; i <= 6; i++) {
+            setupSkillDropdown(i);
+        }
+
+        // Setup remove buttons for skills 2 to 6
+        for (let i = 2; i <= 6; i++) {
+            const selectElement = document.getElementById(`skill-select-${i}`);
+            const removeBtn = document.getElementById(`remove-btn-${i}`);
+            
+            if (selectElement && removeBtn) {
+                // Show remove button when a skill is selected
+                selectElement.addEventListener('change', function() {
+                    if (this.value && this.value !== '') {
+                        removeBtn.style.display = 'inline-block';
+                    } else {
+                        removeBtn.style.display = 'none';
+                    }
+                });
+                
+                // Add click event to remove button
+                removeBtn.addEventListener('click', function() {
+                    removeSkill(i);
+                });
+            }
+        }
+
+        // Handle hobby dropdown
+        const hobbySelect = document.getElementById('hobbies');
+        const customHobby = document.getElementById('custom_hobby');
+        
+        if (hobbySelect) {
+            hobbySelect.addEventListener('change', function() {
+                if (this.value === 'other_hobby') {
+                    customHobby.style.display = 'block';
+                    customHobby.required = true;
+                    customHobby.focus();
+                } else {
+                    customHobby.style.display = 'none';
+                    customHobby.required = false;
+                    customHobby.value = '';
+                }
+            });
+        }
+
+        // Handle form submission for custom hobby
+        document.getElementById('careerForm').addEventListener('submit', function(e) {
+            const hobbySelect = document.getElementById('hobbies');
+            const customHobbyInput = document.getElementById('custom_hobby');
+            
+            if (hobbySelect.value === 'other_hobby' && customHobbyInput.value) {
+                // Create hidden input for custom hobby
+                let hiddenHobby = document.querySelector('input[name="hobbies"]');
+                if (!hiddenHobby) {
+                    hiddenHobby = document.createElement('input');
+                    hiddenHobby.type = 'hidden';
+                    hiddenHobby.name = 'hobbies';
+                    this.appendChild(hiddenHobby);
+                }
+                hiddenHobby.value = customHobbyInput.value;
+            }
+        });
+    </script>
+</body>
+</html>

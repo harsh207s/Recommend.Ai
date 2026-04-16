@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team | CareerAI - Meet Our 10 Members</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .team-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+        
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .logo-icon {
+            font-size: 2em;
+        }
+        
+        .team-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+        
+        .team-header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        
+        .nav-bar {
+            background: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e0e0e0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .nav-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .team-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+            margin: 20px;
+            border-radius: 20px;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 30px;
+            padding: 40px;
+        }
+        
+        .team-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border-color: #667eea;
+        }
+        
+        /* FIXED: Better image container - shows full image without cropping */
+        .photo-container {
+            position: relative;
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        /* FIXED: Image displays fully without cropping */
+        .member-photo {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+            background: #f0f0f0;
+        }
+        
+        /* Alternative: If you want fixed height with cover (may crop) */
+        /* Use this if you prefer consistent height */
+        .photo-container-fixed {
+            height: 320px;
+        }
+        .member-photo-fixed {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        .team-card:hover .member-photo {
+            transform: scale(1.05);
+        }
+        
+        .position-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+        .default-avatar {
+            font-size: 100px;
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+        
+        .member-info {
+            padding: 25px;
+        }
+        
+        .member-name {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .member-role {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        
+        .member-details {
+            margin: 15px 0;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            color: #666;
+            font-size: 0.85em;
+        }
+        
+        .detail-icon {
+            font-size: 1em;
+            min-width: 20px;
+        }
+        
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+        
+        .skill-tag {
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+            color: #667eea;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            font-weight: 500;
+        }
+        
+        .member-bio {
+            color: #777;
+            line-height: 1.5;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 0.85em;
+        }
+        
+        .member-email {
+            display: inline-block;
+            margin-top: 15px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+        
+        .member-email:hover {
+            text-decoration: underline;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 40px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .team-header h1 {
+                font-size: 1.8em;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+            
+            .nav-bar {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .team-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .team-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="team-header">
+            <div class="logo">
+                <span class="logo-icon">👥</span>
+                <span class="logo-text">CareerAI Team</span>
+            </div>
+            <h1>Meet Our Amazing Team of 10</h1>
+            <p>Dedicated professionals working together to build the future of career guidance</p>
+        </div>
+        
+        <div class="nav-bar">
+            <div class="nav-links">
+                <a href="/" class="nav-link">🏠 Home</a>
+                <a href="/team" class="nav-link active">👥 Our Team</a>
+                <a href="/dashboard" class="nav-link">📊 Dashboard</a>
+            </div>
+            <div style="color: #667eea; font-weight: 500;">
+                Version 2.0 | AI-Powered Career Guidance
+            </div>
+        </div>
+        
+        <div class="team-stats">
+            <div class="stat-box">
+                <div class="stat-number">{{ team_members|length }}</div>
+                <div class="stat-label">Team Members</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">1</div>
+                <div class="stat-label">Leader</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">1</div>
+                <div class="stat-label">Co-Leader</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Members</div>
+            </div>
+        </div>
+        
+        <div class="team-grid">
+            {% for member in team_members %}
+            <div class="team-card">
+                <div class="photo-container">
+                    <div class="position-badge">{{ member.position }}</div>
+                    {% if member.photo %}
+                        <img src="{{ url_for('static', filename='team_photos/' + member.photo) }}" 
+                             alt="{{ member.name }}" 
+                             class="member-photo"
+                             onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\' viewBox=\'0 0 24 24\' fill=\'%23667eea\'%3E%3Cpath d=\'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\'/%3E%3C/svg%3E'">
+                    {% else %}
+                        <div class="default-avatar">👤</div>
+                    {% endif %}
+                </div>
+                <div class="member-info">
+                    <h3 class="member-name">{{ member.name }}</h3>
+                    <div class="member-role">{{ member.role }}</div>
+                    <div class="member-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">🎓</span>
+                            <span>Roll Number: {{ member.roll_number }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">🆔</span>
+                            <span>Student ID: {{ member.student_id }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">📚</span>
+                            <span>Department: {{ member.department }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">📅</span>
+                            <span>Year: {{ member.year }}</span>
+                        </div>
+                    </div>
+                    <div class="skills-list">
+                        {% for skill in member.skills %}
+                        <span class="skill-tag">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="member-bio">
+                        {{ member.bio }}
+                    </div>
+                    <a href="mailto:{{ member.email }}" class="member-email">
+                        📧 Contact {{ member.name.split()[0] }}
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="footer">
+            <p>🌟 CareerAI With Airy - Building Intelligent Career Solutions for a Better Tomorrow</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">
+                Department of Computer Applications | AI & Machine Learning Lab
+            </p>
+            <p style="margin-top: 10px; font-size: 0.85em;">
+                <strong>Total Team Members:</strong> {{ team_members|length }} |  
+                <strong>Version:</strong> 2.0
+            </p>
+            <a href="/" class="back-button">
+                🚀 Start Your Career Journey
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Career Recommendations | CareerAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px;}
+        .container{max-width:1200px;margin:0 auto;background:white;border-radius:30px;box-shadow:0 30px 60px rgba(0,0,0,0.3);overflow:hidden;}
+        .result-header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:30px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+        .logo-small{display:flex;align-items:center;gap:8px;font-size:1.2em;font-weight:bold;}
+        .user-greeting h1{font-size:1.5em;margin-bottom:5px;}
+        .nav-bar{background:white;padding:15px 40px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #e0e0e0;flex-wrap:wrap;gap:15px;}
+        .nav-links{display:flex;gap:20px;flex-wrap:wrap;}
+        .nav-link{text-decoration:none;color:#667eea;font-weight:600;padding:8px 16px;border-radius:8px;transition:all 0.3s;}
+        .nav-link:hover{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;transform:translateY(-2px);}
+        .user-profile-summary{padding:25px 40px;background:#f8f9fa;border-bottom:1px solid #e0e0e0;}
+        .profile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:15px;}
+        .profile-item{padding:10px;background:white;border-radius:10px;border:1px solid #e0e0e0;}
+        .profile-label{font-weight:600;color:#667eea;margin-right:10px;}
+        .recommendations-section{padding:40px;}
+        .career-card-enhanced{display:flex;background:white;border:2px solid #e0e0e0;border-radius:16px;margin-bottom:20px;overflow:hidden;transition:all 0.3s;}
+        .career-card-enhanced:hover{border-color:#667eea;box-shadow:0 10px 30px rgba(0,0,0,0.1);transform:translateX(5px);}
+        .career-rank{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;font-size:2em;font-weight:bold;padding:20px;min-width:80px;display:flex;align-items:center;justify-content:center;}
+        .career-content{flex:1;padding:20px;}
+        .career-content h3{color:#667eea;margin-bottom:10px;}
+        .career-meta{display:flex;gap:10px;margin-bottom:15px;flex-wrap:wrap;}
+        .meta-tag{padding:4px 12px;border-radius:20px;font-size:0.85em;font-weight:500;}
+        .field-tag{background:#e3f2fd;color:#1976d2;}
+        .salary-tag{background:#e8f5e9;color:#388e3c;}
+        .growth-high{background:#fff3e0;color:#f57c00;}
+        .career-desc{color:#555;margin-bottom:12px;line-height:1.5;}
+        .skills-section{margin-bottom:10px;font-size:0.9em;color:#666;}
+        .hobby-match{margin-top:10px;padding:8px 12px;background:linear-gradient(135deg,#667eea15 0%,#764ba215 100%);border-radius:8px;font-size:0.9em;color:#667eea;}
+        .match-details{display:flex;align-items:center;gap:15px;margin-top:10px;}
+        .match-bar{flex:1;height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden;}
+        .match-fill{height:100%;background:linear-gradient(90deg,#667eea 0%,#764ba2 100%);transition:width 0.5s;}
+        .match-percentage{font-weight:bold;color:#667eea;}
+        .dashboard-section{background:#f8f9fa;padding:40px;border-top:1px solid #e0e0e0;}
+        .dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:25px;margin-top:20px;}
+        .chart-card{background:white;border-radius:16px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+        .chart-card img{width:100%;height:auto;border-radius:8px;}
+        .stats-summary{padding:40px;background:white;}
+        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px;margin:20px 0;}
+        .stat-card{text-align:center;padding:20px;background:linear-gradient(135deg,#667eea15 0%,#764ba215 100%);border-radius:16px;}
+        .stat-number{font-size:2.5em;font-weight:bold;color:#667eea;}
+        .action-buttons{display:flex;gap:15px;justify-content:center;padding:30px 40px;background:#f8f9fa;flex-wrap:wrap;}
+        .btn{padding:12px 25px;border:none;border-radius:10px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.3s;}
+        .btn-primary{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(102,126,234,0.4);}
+        .btn-secondary{background:#6c757d;color:white;}
+        .btn-print{background:#28a745;color:white;}
+        .footer-note{padding:20px 40px;text-align:center;color:#666;font-size:0.85em;border-top:1px solid #e0e0e0;}
+        @media (max-width:768px){.career-card-enhanced{flex-direction:column;}.career-rank{min-width:auto;padding:10px;}.dashboard-grid{grid-template-columns:1fr;}.nav-bar{flex-direction:column;text-align:center;}}
+        @media print{.action-buttons,.btn{display:none;}}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="result-header">
+            <div class="logo-small"><span>🎯</span><span>CareerAI</span></div>
+            <div class="user-greeting"><h1>Hello, {{ user_name }}! 👋</h1><p>Your personalized career recommendations</p></div>
+        </div>
+        
+        <div class="nav-bar">
+            <div class="nav-links">
+                <a href="/" class="nav-link">🏠 Home</a>
+                <a href="/team" class="nav-link">👥 Our Team (8 Members)</a>
+                <a href="/dashboard" class="nav-link">📊 Dashboard</a>
+            </div>
+            <div style="color: #667eea; font-weight: 500;">AI-Powered Career Guidance</div>
+        </div>
+
+        <div class="user-profile-summary">
+            <h3>📋 Your Profile</h3>
+            <div class="profile-grid">
+                <div class="profile-item"><span class="profile-label">Interest:</span>{{ user_inputs.interests }}</div>
+                <div class="profile-item"><span class="profile-label">Skills:</span>{{ user_inputs.skills[:80] }}{% if user_inputs.skills|length > 80 %}...{% endif %}</div>
+                <div class="profile-item"><span class="profile-label">Education:</span>{{ user_inputs.education }}</div>
+                <div class="profile-item"><span class="profile-label">Work Style:</span>{{ user_inputs.work_style }}</div>
+                <div class="profile-item"><span class="profile-label">🎨 Hobbies:</span>{{ user_inputs.hobbies }}</div>
+            </div>
+        </div>
+
+        <div class="recommendations-section">
+            <h2>🎯 Top Career Matches</h2>
+            {% for career in recommendations %}
+            <div class="career-card-enhanced">
+                <div class="career-rank">{{ loop.index }}</div>
+                <div class="career-content">
+                    <h3>{{ career.title }}</h3>
+                    <div class="career-meta">
+                        <span class="meta-tag field-tag">{{ career.field }}</span>
+                        <span class="meta-tag salary-tag">{{ career.salary_range }}</span>
+                        <span class="meta-tag growth-{{ career.growth_rate|lower }}">{{ career.growth_rate }} Growth</span>
+                    </div>
+                    <p class="career-desc">{{ career.description }}</p>
+                    <div class="skills-section"><strong>🔧 Key Skills:</strong> {{ career.required_skills }}</div>
+                    {% if career.match_details.hobbies %}
+                    <div class="hobby-match"><strong>🎯 Hobby Match:</strong> {{ career.match_details.hobbies }}</div>
+                    {% endif %}
+                    <div class="match-details">
+                        <div class="match-bar"><div class="match-fill" style="width: {{ career.score }}%"></div></div>
+                        <div class="match-percentage">{{ career.score }}% Match</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="dashboard-section">
+            <h2>📊 Career Insights Dashboard</h2>
+            <p>Powered by Pandas, NumPy & Matplotlib</p>
+            <div class="dashboard-grid">
+                <div class="chart-card"><h4>Career Distribution</h4><img src="data:image/png;base64,{{ dashboard_charts.field_distribution }}" alt="Distribution"></div>
+                <div class="chart-card"><h4>Education Requirements</h4><img src="data:image/png;base64,{{ dashboard_charts.education_by_field }}" alt="Education"></div>
+                <div class="chart-card"><h4>Salary Analysis</h4><img src="data:image/png;base64,{{ dashboard_charts.salary_distribution }}" alt="Salary"></div>
+                <div class="chart-card"><h4>Your Match Profile</h4><img src="data:image/png;base64,{{ dashboard_charts.user_match_profile }}" alt="Matches"></div>
+                <div class="chart-card"><h4>Growth Analysis</h4><img src="data:image/png;base64,{{ dashboard_charts.growth_analysis }}" alt="Growth"></div>
+                <div class="chart-card"><h4>Top Skills</h4><img src="data:image/png;base64,{{ dashboard_charts.top_skills }}" alt="Skills"></div>
+            </div>
+        </div>
+
+        <div class="stats-summary">
+            <h3>📈 Platform Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-number">{{ career_stats.total_careers }}</div><div>Total Careers</div></div>
+                <div class="stat-card"><div class="stat-number">{{ career_stats.fields }}</div><div>Industries</div></div>
+                <div class="stat-card"><div class="stat-number">{{ career_stats.high_growth_careers }}</div><div>High Growth</div></div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="/" class="btn btn-primary">← Start New Search</a>
+            <a href="/dashboard" class="btn btn-secondary">📊 Full Dashboard</a>
+            <button onclick="window.print()" class="btn btn-print">🖨️ Save Results</button>
+        </div>
+
+        <div class="footer-note">
+            <p>💡 AI-powered recommendations based on your interests, skills, hobbies, education & work style</p>
+        </div>
+    </div>
+</body>
+</html>
