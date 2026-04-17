@@ -23,7 +23,7 @@ team_members = [
         'student_id': 'MCA2024139',
         'position': 'Leader',
         'role': 'Project Lead & AI Engineer',
-        'bio': 'Leading the AI development team with expertise in Machine Learning, Deep Learning, and Career Analytics. Responsible for overall project coordination and AI model implementation.',
+        'bio': 'Leading the AI development team with Career Analytics. Responsible for overall project coordination and AI model implementation.',
         'photo': 'harshu.jpeg',
         'email': 'harshaer35@gmail.com',
         'department': 'Computer Applications',
@@ -53,7 +53,7 @@ team_members = [
         'role': 'Frontend Developer & UI Designer',
         'bio': 'Expert in responsive design, user experience, and modern web technologies. Creates beautiful and intuitive interfaces for the platform.',
         'photo': 'piyush.jpeg',
-        'email': 'piyush.air@university.edu',
+        'email': 'piyushsinghair893@gmail.com',
         'department': 'Computer Applications',
         'year': 'Final Year',
         'skills': ['HTML/CSS', 'JavaScript', 'React', 'UI/UX Design']
